@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+  final int currentIndex;
+  final Function(int) onTap;
+
+  const BottomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 60,
       child: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: onTap,
         elevation: 0,
         backgroundColor: Colors.white,
         selectedFontSize: 0,
