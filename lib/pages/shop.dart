@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bottom_nav_bar.dart';
 
 class Shop extends StatelessWidget {
   const Shop({super.key});
@@ -9,19 +10,7 @@ class Shop extends StatelessWidget {
       body: Column(
         children: const [],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.black),
-            label: 'Search',
-          ),
-        ],
-      ),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }
