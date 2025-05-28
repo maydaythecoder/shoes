@@ -13,18 +13,20 @@ class BottomNavBar extends StatelessWidget {
         selectedFontSize: 0,
         unselectedFontSize: 0,
         iconSize: 20,
+        selectedItemColor: Colors.grey[700],
+        unselectedItemColor: Colors.grey[400],
         items: const [
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(top: 6),
-              child: Icon(Icons.shopping_bag, color: Colors.black),
+              child: Icon(Icons.shopping_bag),
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(top: 6),
-              child: Icon(Icons.shopping_cart, color: Colors.black),
+              child: Icon(Icons.shopping_cart),
             ),
             label: '',
           ),
