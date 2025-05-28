@@ -12,32 +12,29 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
       child: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: onTap,
         elevation: 0,
-        backgroundColor: Colors.white,
-        selectedFontSize: 0,
-        unselectedFontSize: 0,
-        iconSize: 20,
+        backgroundColor: Colors.grey[50],
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
+        iconSize: 24,
         selectedItemColor: Colors.grey[700],
         unselectedItemColor: Colors.grey[400],
-        items: const [
+        type: BottomNavigationBarType.fixed,
+        items: [
           BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(top: 6),
-              child: Icon(Icons.shopping_bag),
-            ),
-            label: '',
+            icon: Icon(Icons.shopping_bag),
+            label: 'Shop',
+            backgroundColor: currentIndex == 0 ? Colors.grey[50] : Colors.transparent,
           ),
           BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(top: 6),
-              child: Icon(Icons.shopping_cart),
-            ),
-            label: '',
+            icon: Icon(Icons.shopping_cart), 
+            label: 'Cart',
+            backgroundColor: currentIndex == 1 ? Colors.grey[50] : Colors.transparent,
           ),
         ],
       ),
