@@ -10,10 +10,13 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Shop Page',
-        style: TextStyle(fontSize: 24, color: Colors.black),
+    return const Scaffold(
+      body: Column(
+        children: [
+          SearchBar(),
+          SizedBox(height: 20),
+          Text('Shop', style: TextStyle(fontSize: 24, color: Colors.black)),
+        ],
       ),
     );
   }

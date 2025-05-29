@@ -5,8 +5,14 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Cart Page', style: TextStyle(fontSize: 24)),
+    return const Scaffold(
+      body: Column(
+        children: [
+          SearchBar(),
+          SizedBox(height: 20),
+          Text('Cart', style: TextStyle(fontSize: 24, color: Colors.black)),
+        ],
+      ),
     );
   }
 }
