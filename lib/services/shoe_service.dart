@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import '../models/shoe.dart';
 
 class ShoeService {
@@ -11,8 +12,8 @@ class ShoeService {
       final Map<String, dynamic> jsonData = json.decode(jsonString);
       final List<dynamic> shoesJson = jsonData['shoes'] as List;
       return shoesJson.map((json) => Shoe.fromJson(json)).toList();
-    } catch (e) {
-      print('Error loading shoes: $e');
+    } catch (e, stackTrace) {
+      debugPrint('Error loading shoes: $e\n$stackTrace');
       return [];
     }
   }

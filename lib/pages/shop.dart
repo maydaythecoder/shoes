@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../components/searchbar.dart';
-import '../components/card.dart';
+import '../components/shoe_search_bar.dart';
+import '../components/shoe_card.dart';
 import '../models/shoe.dart';
 import '../services/shoe_service.dart';
 
@@ -14,6 +14,8 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   List<Shoe> _shoes = [];
   bool _isLoading = true;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   void initState() {
@@ -21,12 +23,27 @@ class _ShopState extends State<Shop> {
     _loadShoes();
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadShoes() async {
     final shoes = await ShoeService.loadShoes();
-    setState(() {
-      _shoes = shoes;
-      _isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        _shoes = shoes;
+        _isLoading = false;
+      });
+    }
+  }
+
+  List<Shoe> get _filteredShoes {
+    if (_searchQuery.isEmpty) return _shoes;
+    return _shoes.where((shoe) {
+      return shoe.title.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
   }
 
   @override
@@ -49,20 +66,38 @@ class _ShopState extends State<Shop> {
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
+                      letterSpacing: -1, // Nike-style typography
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${_shoes.length} Products',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    '${_filteredShoes.length} Products',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                      letterSpacing: -0.5, // Nike-style typography
+                    ),
                   ),
                 ],
               ),
             ),
             // Search Bar
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: MySearchBar(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: ShoeSearchBar(
+                controller: _searchController,
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
+                onClear: () {
+                  _searchController.clear();
+                  setState(() {
+                    _searchQuery = '';
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 16),
             // Grid
@@ -76,6 +111,17 @@ class _ShopState extends State<Shop> {
                           ),
                         ),
                       )
+                      : _filteredShoes.isEmpty
+                      ? Center(
+                        child: Text(
+                          'No shoes found',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                            letterSpacing: -0.5, // Nike-style typography
+                          ),
+                        ),
+                      )
                       : GridView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         gridDelegate:
@@ -85,10 +131,10 @@ class _ShopState extends State<Shop> {
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 16,
                             ),
-                        itemCount: _shoes.length,
+                        itemCount: _filteredShoes.length,
                         itemBuilder: (context, index) {
-                          final shoe = _shoes[index];
-                          return MyCard(
+                          final shoe = _filteredShoes[index];
+                          return ShoeCard(
                             imagePath: shoe.imagePath,
                             title: shoe.title,
                             price: shoe.price,
