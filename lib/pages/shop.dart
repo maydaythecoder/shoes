@@ -134,11 +134,7 @@ class _ShopState extends State<Shop> {
                         itemCount: _filteredShoes.length,
                         itemBuilder: (context, index) {
                           final shoe = _filteredShoes[index];
-                          return ShoeCard(
-                            imagePath: shoe.imagePath,
-                            title: shoe.title,
-                            price: shoe.price,
-                          );
+                          return ShoeCard(shoe: shoe);
                         },
                       ),
             ),
