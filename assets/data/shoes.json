@@ -1,0 +1,40 @@
+{
+  "shoes": [
+    {
+      "id": "1",
+      "title": "Nike Air Max",
+      "price": 199.99,
+      "imagePath": "assets/images/one.jpeg",
+      "description": "Classic Nike Air Max with superior comfort and style",
+      "colors": ["Black", "White", "Red"],
+      "sizes": [7, 8, 9, 10, 11, 12]
+    },
+    {
+      "id": "2",
+      "title": "Nike Zoom",
+      "price": 179.99,
+      "imagePath": "assets/images/two.jpeg",
+      "description": "Lightweight running shoes with responsive cushioning",
+      "colors": ["Blue", "Grey", "White"],
+      "sizes": [7, 8, 9, 10, 11]
+    },
+    {
+      "id": "3",
+      "title": "Nike Revolution",
+      "price": 89.99,
+      "imagePath": "assets/images/three.jpeg",
+      "description": "Affordable comfort for everyday wear",
+      "colors": ["Black", "Grey"],
+      "sizes": [7, 8, 9, 10, 11, 12]
+    },
+    {
+      "id": "4",
+      "title": "Nike Air Force",
+      "price": 159.99,
+      "imagePath": "assets/images/four.jpeg",
+      "description": "Iconic street style with premium materials",
+      "colors": ["White", "Black", "Red"],
+      "sizes": [7, 8, 9, 10, 11, 12]
+    }
+  ]
+} 
