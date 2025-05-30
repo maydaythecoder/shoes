@@ -12,6 +12,7 @@ class Shop extends StatefulWidget {
 }
 
 class _ShopState extends State<Shop> {
+  final ShoeService _shoeService = ShoeService();
   List<Shoe> _shoes = [];
   bool _isLoading = true;
   final TextEditingController _searchController = TextEditingController();
@@ -20,7 +21,7 @@ class _ShopState extends State<Shop> {
   @override
   void initState() {
     super.initState();
-    _loadShoes();
+    _initializeAndLoadShoes();
   }
 
   @override
@@ -29,8 +30,27 @@ class _ShopState extends State<Shop> {
     super.dispose();
   }
 
+  Future<void> _initializeAndLoadShoes() async {
+    try {
+      await _shoeService.initialize();
+      await _loadShoes();
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to load shoes. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   Future<void> _loadShoes() async {
-    final shoes = await ShoeService.loadShoes();
+    final shoes = await _shoeService.loadShoes();
     if (mounted) {
       setState(() {
         _shoes = shoes;
@@ -102,41 +122,40 @@ class _ShopState extends State<Shop> {
             const SizedBox(height: 16),
             // Grid
             Expanded(
-              child:
-                  _isLoading
-                      ? const Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.black,
-                          ),
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.black,
                         ),
-                      )
-                      : _filteredShoes.isEmpty
-                      ? Center(
-                        child: Text(
-                          'No shoes found',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                            letterSpacing: -0.5, // Nike-style typography
-                          ),
-                        ),
-                      )
-                      : GridView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16,
-                            ),
-                        itemCount: _filteredShoes.length,
-                        itemBuilder: (context, index) {
-                          final shoe = _filteredShoes[index];
-                          return ShoeCard(shoe: shoe);
-                        },
                       ),
+                    )
+                  : _filteredShoes.isEmpty
+                      ? Center(
+                          child: Text(
+                            'No shoes found',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[600],
+                              letterSpacing: -0.5, // Nike-style typography
+                            ),
+                          ),
+                        )
+                      : GridView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
+                          itemCount: _filteredShoes.length,
+                          itemBuilder: (context, index) {
+                            final shoe = _filteredShoes[index];
+                            return ShoeCard(shoe: shoe);
+                          },
+                        ),
             ),
           ],
         ),

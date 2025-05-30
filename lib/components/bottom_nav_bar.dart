@@ -27,12 +27,12 @@ class BottomNavBar extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
+            icon: const Icon(Icons.shopping_bag),
             label: 'Shop',
             backgroundColor: currentIndex == 0 ? Colors.grey[50] : Colors.transparent,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart), 
+            icon: const Icon(Icons.shopping_cart), 
             label: 'Cart',
             backgroundColor: currentIndex == 1 ? Colors.grey[50] : Colors.transparent,
           ),
